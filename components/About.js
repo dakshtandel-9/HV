@@ -75,7 +75,7 @@ export default function About() {
             </h3>
             <div className="space-y-6 text-navy-600 leading-relaxed">
               <p>
-                Founded with a vision to redefine men's fashion, HV Fashion has been at the forefront 
+                Founded with a vision to redefine men&apos;s fashion, HV Fashion has been at the forefront 
                 of premium clothing for over two decades. What started as a small boutique has grown 
                 into a trusted name synonymous with quality, style, and sophistication.
               </p>

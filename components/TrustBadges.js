@@ -117,7 +117,7 @@ export default function TrustBadges() {
             Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-600">HV Fashion</span>
           </h2>
           <p className="text-xl text-navy-600 max-w-3xl mx-auto">
-            Your trust is our foundation. We're committed to providing exceptional quality, 
+            Your trust is our foundation. We&apos;re committed to providing exceptional quality, 
             service, and value in every aspect of your shopping experience.
           </p>
         </div>
@@ -197,7 +197,7 @@ export default function TrustBadges() {
           
           <div className="mt-8 pt-8 border-t border-navy-700">
             <blockquote className="text-xl text-navy-100 italic mb-4">
-              "Exceptional quality and outstanding service. HV Fashion has become my go-to destination for premium clothing."
+              &ldquo;Exceptional quality and outstanding service. HV Fashion has become my go-to destination for premium clothing.&rdquo;
             </blockquote>
             <cite className="text-amber-400 font-medium">- Rajesh Kumar, Verified Customer</cite>
           </div>

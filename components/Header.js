@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,9 +31,9 @@ export default function Header() {
               <a href="#home" className="text-navy-700 hover:text-navy-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Home
               </a>
-              <a href="/products" className="text-navy-700 hover:text-navy-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link href="/products" className="text-navy-700 hover:text-navy-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Products
-              </a>
+              </Link>
               
               {/* Collections Dropdown */}
               <div className="relative group">
@@ -99,9 +100,9 @@ export default function Header() {
             <a href="#home" className="block px-3 py-2 text-navy-700 hover:text-navy-900 hover:bg-navy-50 rounded-md text-base font-medium">
               Home
             </a>
-            <a href="/products" className="block px-3 py-2 text-navy-700 hover:text-navy-900 hover:bg-navy-50 rounded-md text-base font-medium">
+            <Link href="/products" className="block px-3 py-2 text-navy-700 hover:text-navy-900 hover:bg-navy-50 rounded-md text-base font-medium">
               Products
-            </a>
+            </Link>
             <div className="px-3 py-2">
               <p className="text-navy-900 font-medium text-base mb-2">Collections</p>
               <div className="pl-4 space-y-1">

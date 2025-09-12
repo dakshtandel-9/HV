@@ -96,7 +96,7 @@ export default function Contact() {
           </h2>
           <p className="text-xl text-navy-600 max-w-3xl mx-auto">
             Have questions about our products or need styling advice? 
-            We're here to help you find the perfect outfit for every occasion.
+            We&apos;re here to help you find the perfect outfit for every occasion.
           </p>
         </div>
 

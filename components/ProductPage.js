@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { blazerImages } from '../app/data/blazerImages';
 
 export default function ProductPage({ productId }) {
@@ -110,9 +111,9 @@ export default function ProductPage({ productId }) {
         {/* Breadcrumb */}
         <nav className="mb-8">
           <div className="flex items-center space-x-2 text-sm text-navy-600">
-            <a href="/" className="hover:text-navy-900 transition-colors">Home</a>
+            <Link href="/" className="hover:text-navy-900 transition-colors">Home</Link>
             <span>/</span>
-            <a href="/products" className="hover:text-navy-900 transition-colors">Products</a>
+            <Link href="/products" className="hover:text-navy-900 transition-colors">Products</Link>
             <span>/</span>
             <span className="text-navy-900 font-medium">{product.category}</span>
             <span>/</span>
