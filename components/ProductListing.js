@@ -1,36 +1,87 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { blazerImages } from '../app/data/blazerImages';
 
 export default function ProductListing() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortBy, setSortBy] = useState('name');
 
-  // Product data based on available images
-  const products = [
-    {
-      id: 1,
-      name: 'Premium Shirt',
-      category: 'Shirt',
-      image: '/ProductsImage/Shirt/WhatsApp Image 2025-09-05 at 11.16.56 AM.jpeg',
-      description: 'High-quality premium shirt crafted with finest materials',
-      features: ['Premium Cotton', 'Wrinkle Resistant', 'Comfortable Fit'],
-      badge: 'Featured'
-    }
+  // Blazer images imported from centralized data file
+
+  // Blazer style names for variety
+  const blazerStyles = [
+    'Executive', 'Classic', 'Modern', 'Formal', 'Casual', 'Premium', 'Business', 'Professional',
+    'Elegant', 'Sophisticated', 'Contemporary', 'Traditional', 'Luxury', 'Designer', 'Tailored',
+    'Slim Fit', 'Regular Fit', 'Double Breasted', 'Single Breasted', 'Navy', 'Black', 'Charcoal',
+    'Grey', 'Blue', 'Brown', 'Pinstripe', 'Textured', 'Wool', 'Cotton', 'Linen', 'Velvet'
   ];
 
-  const categories = ['All', 'Shirt'];
+  const blazerTypes = [
+    'Blazer', 'Sport Coat', 'Suit Jacket', 'Dinner Jacket', 'Tuxedo Jacket'
+  ];
 
-  const filteredProducts = selectedCategory === 'All' 
-    ? products 
-    : products.filter(product => product.category === selectedCategory);
+  const badges = ['Featured', 'Premium', 'Best Seller', 'New', 'Popular', 'Limited', 'Exclusive'];
 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortBy === 'name') return a.name.localeCompare(b.name);
-    if (sortBy === 'category') return a.category.localeCompare(b.category);
-    return 0;
+  // Generate all blazer products
+  const blazerProducts = blazerImages.map((imageUrl, index) => {
+    const styleIndex = index % blazerStyles.length;
+    const typeIndex = index % blazerTypes.length;
+    const badgeIndex = index % badges.length;
+    
+    return {
+      id: index + 2, // Start from 2 since shirt is id 1
+      name: 'HV blazers',
+      category: 'Blazer',
+      image: imageUrl,
+      description: `Premium ${blazerStyles[styleIndex].toLowerCase()} ${blazerTypes[typeIndex].toLowerCase()} crafted with finest materials for the modern professional`,
+      features: ['Premium Fabric', 'Tailored Fit', 'Professional Look'],
+      badge: badges[badgeIndex],
+      rating: 4.5 + ((index * 7) % 40) / 100, // Deterministic rating between 4.5-4.9
+      reviews: ((index * 13) % 150) + 20 // Deterministic reviews between 20-170
+    };
   });
+
+  // Product data with all blazers
+  const products = blazerProducts;
+
+  const categories = ['All', 'Blazer'];
+  const [searchTerm, setSearchTerm] = useState('');
+  const [displayCount, setDisplayCount] = useState(12); // Initial load count
+
+  // Memoized filtered products for better performance
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => {
+      const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           product.description.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [products, selectedCategory, searchTerm]);
+
+  const sortedProducts = useMemo(() => {
+    return [...filteredProducts].sort((a, b) => {
+      if (sortBy === 'name') return a.name.localeCompare(b.name);
+      if (sortBy === 'category') return a.category.localeCompare(b.category);
+      return 0;
+    });
+  }, [filteredProducts, sortBy]);
+
+  // Memoized displayed products with lazy loading
+  const displayedProducts = useMemo(() => {
+    return sortedProducts.slice(0, displayCount);
+  }, [sortedProducts, displayCount]);
+
+  // Load more products function
+  const loadMore = () => {
+    setDisplayCount(prev => Math.min(prev + 12, sortedProducts.length));
+  };
+
+  // Reset display count when filters change
+  useEffect(() => {
+    setDisplayCount(12);
+  }, [selectedCategory, searchTerm]);
 
   const getBadgeColor = (badge) => {
     switch (badge) {
@@ -58,6 +109,17 @@ export default function ProductListing() {
 
         {/* Filters and Sort */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+          {/* Search Bar */}
+          <div className="flex-1 max-w-md">
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-4 py-2 border border-navy-200 rounded-lg bg-white text-navy-700 focus:outline-none focus:ring-2 focus:ring-navy-500"
+            />
+          </div>
+
           {/* Category Filter */}
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
@@ -91,19 +153,19 @@ export default function ProductListing() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {sortedProducts.map((product) => (
+          {displayedProducts.map((product) => (
             <Link
               key={product.id}
               href={`/products/${product.id}`}
               className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 group overflow-hidden block"
             >
               {/* Product Image */}
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative aspect-square overflow-hidden">
                 <Image
                   src={product.image}
                   alt={product.name}
                   fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="object-contain group-hover:scale-110 transition-transform duration-500"
                 />
                 {product.badge && (
                   <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold ${getBadgeColor(product.badge)}`}>
@@ -146,6 +208,18 @@ export default function ProductListing() {
             </Link>
           ))}
         </div>
+
+        {/* Load More Button */}
+        {displayedProducts.length < sortedProducts.length && (
+          <div className="text-center mt-12">
+            <button
+              onClick={loadMore}
+              className="bg-gradient-to-r from-navy-900 to-navy-800 hover:from-navy-800 hover:to-navy-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
+            >
+              Load More Products
+            </button>
+          </div>
+        )}
 
         {/* Empty State */}
         {sortedProducts.length === 0 && (

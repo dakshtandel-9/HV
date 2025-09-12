@@ -1,7 +1,8 @@
 import ProductPage from '../../../components/ProductPage';
 
-export default function ProductDetailPage({ params }) {
-  return <ProductPage productId={parseInt(params.id)} />;
+export default async function ProductDetailPage({ params }) {
+  const { id } = await params;
+  return <ProductPage productId={parseInt(id)} />;
 }
 
 export function generateStaticParams() {

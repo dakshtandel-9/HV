@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Image from 'next/image';
+import { blazerImages } from '../app/data/blazerImages';
 
 export default function ProductPage({ productId }) {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -10,42 +11,67 @@ export default function ProductPage({ productId }) {
     phone: ''
   });
 
-  // Product data - in a real app, this would come from an API or database
-  const products = {
-    1: {
-      id: 1,
-      name: 'Premium Shirt',
-      category: 'Shirt',
+  // Blazer images imported from centralized data file
+
+  const blazerStyles = [
+    'Executive', 'Casual', 'Formal', 'Business', 'Smart Casual', 'Classic', 'Modern', 'Vintage',
+    'Slim Fit', 'Regular Fit', 'Tailored', 'Designer', 'Premium', 'Luxury', 'Professional'
+  ];
+
+  const blazerTypes = [
+    'Single Breasted', 'Double Breasted', 'Notched Lapel', 'Peak Lapel', 'Shawl Collar',
+    'Two Button', 'Three Button', 'Unstructured', 'Half Lined', 'Fully Lined'
+  ];
+
+  const badges = ['Featured', 'New Arrival', 'Best Seller', 'Premium', 'Limited Edition', 'Professional', 'Casual', 'Formal'];
+
+  // Generate blazer products dynamically
+  const blazerProducts = blazerImages.map((imageUrl, index) => {
+    const productId = index + 2; // Start from ID 2 to match ProductListing
+    const styleIndex = index % blazerStyles.length;
+    const typeIndex = index % blazerTypes.length;
+    const badgeIndex = index % badges.length;
+    
+    return {
+      id: productId,
+      name: 'HV blazers',
+      category: 'Blazer',
       images: [
-        '/ProductsImage/Shirt/WhatsApp Image 2025-09-05 at 11.16.56 AM.jpeg'
+        imageUrl,
+        imageUrl
       ],
-      description: 'Experience the perfect blend of comfort and style with our premium shirt. Crafted from the finest materials, this shirt offers exceptional quality and a sophisticated look that\'s perfect for both professional and casual settings.',
+      description: `Experience premium quality with our ${blazerStyles[styleIndex]} ${blazerTypes[typeIndex]} Blazer. Crafted with attention to detail, this blazer combines style and comfort for the modern professional.`,
       features: [
-        'Premium Cotton Blend',
-        'Wrinkle Resistant Technology',
-        'Comfortable Regular Fit',
-        'Easy Care Instructions',
-        'Breathable Fabric',
-        'Durable Construction'
+        'Premium Fabric',
+        'Professional Tailoring',
+        'Comfortable Fit',
+        'Versatile Design',
+        'Quality Construction'
       ],
       specifications: {
-        'Material': '100% Premium Cotton',
-        'Fit': 'Regular Fit',
-        'Care': 'Machine Washable',
+        'Material': index % 3 === 0 ? '70% Wool, 30% Polyester' : index % 3 === 1 ? '60% Cotton, 40% Polyester' : '80% Wool, 20% Polyester',
+        'Fit': index % 2 === 0 ? 'Slim Fit' : 'Regular Fit',
+        'Care': index % 2 === 0 ? 'Dry Clean Only' : 'Machine Washable',
         'Origin': 'Made in India',
-        'Collar': 'Classic Collar',
-        'Sleeve': 'Full Sleeve'
+        'Style': index % 2 === 0 ? 'Single Breasted' : 'Double Breasted',
+        'Lining': index % 2 === 0 ? 'Full Lined' : 'Half Lined'
       },
       sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-      colors: ['White', 'Blue', 'Black'],
-      badge: 'Featured',
+      colors: index % 4 === 0 ? ['Navy', 'Charcoal', 'Black', 'Brown'] : 
+              index % 4 === 1 ? ['Beige', 'Olive', 'Navy', 'Gray'] :
+              index % 4 === 2 ? ['Black', 'Charcoal', 'Navy', 'Brown'] :
+              ['Gray', 'Navy', 'Black', 'Beige'],
+      badge: badges[badgeIndex],
       inStock: true,
-      rating: 4.8,
-      reviews: 124
-    }
-  };
+      rating: 4.5 + ((index * 7) % 40) / 100, // Deterministic rating between 4.5-4.9
+       reviews: ((index * 13) % 150) + 20 // Deterministic reviews between 20-170
+    };
+  });
 
-  const product = products[productId] || products[1];
+  // Create products object with all blazers
+  const products = Object.fromEntries(blazerProducts.map(product => [product.id, product]));
+
+  const product = products[productId] || products[2];
 
   const getBadgeColor = (badge) => {
     switch (badge) {
@@ -103,7 +129,7 @@ export default function ProductPage({ productId }) {
                 src={product.images[selectedImage]}
                 alt={product.name}
                 fill
-                className="object-cover"
+                className="object-contain"
               />
               {product.badge && (
                 <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-semibold ${getBadgeColor(product.badge)}`}>
@@ -129,7 +155,7 @@ export default function ProductPage({ productId }) {
                       src={image}
                       alt={`${product.name} ${index + 1}`}
                       fill
-                      className="object-cover"
+                      className="object-contain"
                     />
                   </button>
                 ))}
@@ -199,7 +225,7 @@ export default function ProductPage({ productId }) {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border-2 border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white hover:border-navy-300"
+                    className="w-full px-4 py-3 border-2 border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white hover:border-navy-300 text-navy-900"
                     placeholder="Enter your full name"
                     required
                   />
@@ -214,12 +240,12 @@ export default function ProductPage({ productId }) {
                     name="size"
                     value={formData.size}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border-2 border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white hover:border-navy-300"
+                    className="w-full px-4 py-3 border-2 border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white hover:border-navy-300 text-navy-900"
                     required
                   >
-                    <option value="">Select a size</option>
+                    <option value="" className="text-gray-500">Select a size</option>
                     {product.sizes.map((size) => (
-                      <option key={size} value={size}>
+                      <option key={size} value={size} className="text-navy-900">
                         {size}
                       </option>
                     ))}
@@ -236,7 +262,7 @@ export default function ProductPage({ productId }) {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border-2 border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white hover:border-navy-300"
+                    className="w-full px-4 py-3 border-2 border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white hover:border-navy-300 text-navy-900"
                     placeholder="Enter your phone number"
                     required
                   />
@@ -254,33 +280,7 @@ export default function ProductPage({ productId }) {
               </form>
             </div>
 
-            {/* Features */}
-            <div>
-              <h3 className="text-lg font-semibold text-navy-900 mb-3">Key Features</h3>
-              <ul className="space-y-2">
-                {product.features.map((feature, index) => (
-                  <li key={index} className="flex items-center gap-2 text-navy-600">
-                    <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
 
-            {/* Specifications */}
-            <div>
-              <h3 className="text-lg font-semibold text-navy-900 mb-3">Specifications</h3>
-              <div className="bg-white rounded-lg p-4 space-y-3">
-                {Object.entries(product.specifications).map(([key, value]) => (
-                  <div key={key} className="flex justify-between items-center border-b border-gray-100 pb-2 last:border-b-0">
-                    <span className="text-navy-600 font-medium">{key}:</span>
-                    <span className="text-navy-900">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>

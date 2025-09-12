@@ -19,7 +19,7 @@ export default function FeaturedProducts() {
       id: 2,
       name: "Executive Blazer",
       category: "blazers",
-      image: "bg-gradient-to-br from-navy-800 to-navy-900",
+      image: "https://drive.google.com/uc?export=view&id=0b99e732-b29a-4b95-8981-2fd9fc6879c8",
       badge: "Premium",
       rating: 4.9,
       description: "Sophisticated navy blazer for business professionals"
