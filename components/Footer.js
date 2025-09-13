@@ -1,49 +1,72 @@
 'use client';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function Footer() {
+  const router = useRouter();
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleNavigation = (href, sectionId = null) => {
+    if (sectionId) {
+      if (window.location.pathname === '/') {
+        scrollToSection(sectionId);
+      } else {
+        router.push('/');
+        setTimeout(() => scrollToSection(sectionId), 100);
+      }
+    } else {
+      router.push(href);
+    }
+  };
   const footerSections = [
     {
       title: "Shop",
       links: [
-        { name: "Premium Shirts", href: "#shirts" },
-        { name: "Formal Trousers", href: "#pants" },
-        { name: "Blazers & Suits", href: "#blazers" },
-        { name: "Casual Wear", href: "#casual" },
-        { name: "Accessories", href: "#accessories" },
-        { name: "Sale Items", href: "#sale" }
+        { name: "Premium Shirts", href: "/products", sectionId: null },
+        { name: "Formal Trousers", href: "/products", sectionId: null },
+        { name: "Blazers & Suits", href: "/products", sectionId: null },
+        { name: "Casual Wear", href: "/products", sectionId: null },
+        { name: "Accessories", href: "/products", sectionId: null },
+        { name: "Sale Items", href: "/", sectionId: "featured-products" }
       ]
     },
     {
       title: "Customer Care",
       links: [
-        { name: "Size Guide", href: "#size-guide" },
-        { name: "Shipping Info", href: "#shipping" },
-        { name: "Returns & Exchange", href: "#returns" },
-        { name: "Care Instructions", href: "#care" },
-        { name: "Track Your Order", href: "#track" },
-        { name: "FAQ", href: "#faq" }
+        { name: "Size Guide", href: "/", sectionId: "contact" },
+        { name: "Shipping Info", href: "/", sectionId: "contact" },
+        { name: "Returns & Exchange", href: "/", sectionId: "contact" },
+        { name: "Care Instructions", href: "/", sectionId: "contact" },
+        { name: "Track Your Order", href: "/", sectionId: "contact" },
+        { name: "FAQ", href: "/", sectionId: "contact" }
       ]
     },
     {
       title: "Company",
       links: [
-        { name: "About HV Fashion", href: "#about" },
-        { name: "Our Story", href: "#story" },
-        { name: "Careers", href: "#careers" },
-        { name: "Press & Media", href: "#press" },
-        { name: "Sustainability", href: "#sustainability" },
-        { name: "Store Locator", href: "#stores" }
+        { name: "About HV Fashion", href: "/", sectionId: "about" },
+        { name: "Our Story", href: "/", sectionId: "about" },
+        { name: "Careers", href: "/", sectionId: "contact" },
+        { name: "Press & Media", href: "/", sectionId: "contact" },
+        { name: "Sustainability", href: "/", sectionId: "about" },
+        { name: "Store Locator", href: "/", sectionId: "contact" }
       ]
     },
     {
       title: "Connect",
       links: [
-        { name: "Contact Us", href: "#contact" },
-        { name: "Style Consultation", href: "#consultation" },
-        { name: "Newsletter", href: "#newsletter" },
-        { name: "Loyalty Program", href: "#loyalty" },
-        { name: "Gift Cards", href: "#gift-cards" },
-        { name: "Bulk Orders", href: "#bulk" }
+        { name: "Contact Us", href: "/", sectionId: "contact" },
+        { name: "Style Consultation", href: "/", sectionId: "contact" },
+        { name: "Newsletter", href: "/", sectionId: "contact" },
+        { name: "Loyalty Program", href: "/", sectionId: "contact" },
+        { name: "Gift Cards", href: "/", sectionId: "contact" },
+        { name: "Bulk Orders", href: "/", sectionId: "contact" }
       ]
     }
   ];
@@ -140,12 +163,14 @@ export default function Footer() {
             {/* Brand Section */}
             <div className="lg:col-span-1">
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white font-bold text-xl">HV</span>
-                </div>
+                <img 
+                  src="/logo.png" 
+                  alt="HV Fashion Logo" 
+                  className="w-12 h-12 mr-3"
+                />
                 <div>
                   <h3 className="text-2xl font-bold">HV Fashion</h3>
-                  <p className="text-amber-400 text-sm">Premium Collection</p>
+                  <p className="text-amber-400 text-sm">Blazer World</p>
                 </div>
               </div>
               <p className="text-navy-300 mb-6 leading-relaxed">
@@ -172,12 +197,12 @@ export default function Footer() {
                 <ul className="space-y-3">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      <a
-                        href={link.href}
-                        className="text-navy-300 hover:text-white transition-colors duration-200 text-sm"
+                      <button
+                        onClick={() => handleNavigation(link.href, link.sectionId)}
+                        className="text-navy-300 hover:text-white transition-colors duration-200 text-sm text-left"
                       >
                         {link.name}
-                      </a>
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -236,9 +261,9 @@ export default function Footer() {
               <div className="space-y-2 text-navy-300 text-sm">
                 <p>&copy; 2024 HV Fashion. All rights reserved.</p>
                 <div className="flex justify-center lg:justify-end space-x-4">
-                  <a href="#privacy" className="hover:text-white transition-colors">Privacy Policy</a>
-                  <a href="#terms" className="hover:text-white transition-colors">Terms of Service</a>
-                  <a href="#cookies" className="hover:text-white transition-colors">Cookie Policy</a>
+                  <button onClick={() => handleNavigation('/', 'contact')} className="hover:text-white transition-colors">Privacy Policy</button>
+                  <button onClick={() => handleNavigation('/', 'contact')} className="hover:text-white transition-colors">Terms of Service</button>
+                  <button onClick={() => handleNavigation('/', 'contact')} className="hover:text-white transition-colors">Cookie Policy</button>
                 </div>
               </div>
             </div>

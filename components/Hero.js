@@ -1,11 +1,11 @@
 'use client';
 
+import Link from "next/link";
+
 export default function Hero() {
   return (
     <section id="home" className="relative bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 overflow-hidden">
       {/* Background Pattern */}
-
-
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -39,12 +39,16 @@ export default function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <button className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-navy-900 font-semibold px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-                Explore Collection
-              </button>
-              <button className="border-2 border-white text-white hover:bg-white hover:text-navy-900 font-semibold px-8 py-4 rounded-lg transition-all duration-300">
-                Watch Our Story
-              </button>
+              <Link href="/products">
+                <button className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-navy-900 font-semibold px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                  Explore Collection
+                </button>
+              </Link>
+              <Link href="#about">
+                <button className="border-2 border-white text-white hover:bg-white hover:text-navy-900 font-semibold px-8 py-4 rounded-lg transition-all duration-300">
+                  Watch Our Story
+                </button>
+              </Link>
             </div>
             
             {/* Stats */}
@@ -67,18 +71,14 @@ export default function Hero() {
           {/* Right Content - Hero Image */}
           <div className="relative">
             <div className="relative z-10">
-              {/* Main Image Placeholder */}
-              <div className="bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl p-8 shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
-                <div className="bg-white rounded-xl p-8 h-96 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-24 h-24 bg-gradient-to-br from-navy-900 to-navy-700 rounded-full mx-auto mb-4 flex items-center justify-center">
-                      <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-2xl font-bold text-navy-900 mb-2">Premium Fashion</h3>
-                    <p className="text-navy-600">Crafted for Excellence</p>
-                  </div>
+              {/* Main Hero Image */}
+              <div className="bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl p-2 shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                <div className="rounded-xl overflow-hidden h-96">
+                  <img 
+                    src="/hero.jpg" 
+                    alt="HV Fashion Premium Collection" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
               
@@ -101,8 +101,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      
-
     </section>
   );
 }

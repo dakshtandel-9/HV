@@ -52,109 +52,120 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-navy-600 to-navy-700 rounded-full mb-6">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-            </svg>
-          </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-navy-900 mb-4">
-            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-600">HV Fashion</span>
+            About HV Fashion
           </h2>
-          <p className="text-xl text-navy-600 max-w-3xl mx-auto">
-            Crafting premium fashion experiences since 1999, we blend traditional craftsmanship 
-            with contemporary design to create clothing that defines modern elegance.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Founded on the principles of quality, innovation, and customer satisfaction, 
+            HV Fashion has been setting new standards in premium menswear for over two decades.
           </p>
         </div>
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
-          {/* Left Content */}
+        {/* Company Story */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
           <div>
             <h3 className="text-3xl font-bold text-navy-900 mb-6">
-              Our Story of Excellence
+              Our Story
             </h3>
-            <div className="space-y-6 text-navy-600 leading-relaxed">
-              <p>
-                Founded with a vision to redefine men&apos;s fashion, HV Fashion has been at the forefront 
-                of premium clothing for over two decades. What started as a small boutique has grown 
-                into a trusted name synonymous with quality, style, and sophistication.
-              </p>
-              <p>
-                Our journey began with a simple belief: every man deserves to look and feel his best. 
-                This philosophy drives everything we do, from selecting the finest fabrics to ensuring 
-                impeccable tailoring in every piece we create.
-              </p>
-              <p>
-                Today, we continue to honor our heritage while embracing innovation, creating timeless 
-                pieces that seamlessly blend classic elegance with contemporary style. Each garment 
-                tells a story of craftsmanship, attention to detail, and unwavering commitment to excellence.
-              </p>
-            </div>
-            
-            {/* CTA Button */}
-            <div className="mt-8">
-              <button className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-                Discover Our Heritage
-              </button>
+            <p className="text-lg text-gray-600 mb-6">
+              What started as a small tailoring shop in Mumbai has grown into one of India's 
+              most trusted premium fashion brands. Our journey began with a simple belief: 
+              every man deserves to look and feel his best.
+            </p>
+            <p className="text-lg text-gray-600 mb-6">
+              Today, we combine traditional craftsmanship with modern design sensibilities 
+              to create clothing that not only looks exceptional but also tells a story of 
+              quality, attention to detail, and timeless style.
+            </p>
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <p className="font-semibold text-navy-900">Quality Guaranteed</p>
+                <p className="text-gray-600">Every piece is crafted to perfection</p>
+              </div>
             </div>
           </div>
           
-          {/* Right Content - Image Placeholder */}
           <div className="relative">
-            <div className="bg-gradient-to-br from-navy-100 to-navy-200 rounded-2xl p-8 h-96 flex items-center justify-center relative overflow-hidden">
-              {/* Background Pattern */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute inset-0" style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23334155' fill-opacity='0.1'%3E%3Cpath d='M20 20c0-11.046-8.954-20-20-20v20h20z'/%3E%3C/g%3E%3C/svg%3E")`,
-                }} />
+            <div className="rounded-2xl overflow-hidden h-96">
+              <img 
+                src="/About.png" 
+                alt="HV Fashion Heritage" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            {/* Floating Stats */}
+            <div className="absolute -top-4 -right-4 bg-white rounded-lg shadow-lg p-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-amber-600">50K+</div>
+                <div className="text-sm text-gray-600">Customers</div>
               </div>
-              
-              <div className="text-center relative z-10">
-                <div className="w-32 h-32 bg-gradient-to-br from-navy-600 to-navy-800 rounded-full mx-auto mb-6 flex items-center justify-center">
-                  <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                  </svg>
-                </div>
-                <h4 className="text-2xl font-bold text-navy-900 mb-2">25+ Years</h4>
-                <p className="text-navy-600">of Fashion Excellence</p>
+            </div>
+            
+            <div className="absolute -bottom-4 -left-4 bg-white rounded-lg shadow-lg p-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-amber-600">99%</div>
+                <div className="text-sm text-gray-600">Satisfaction</div>
               </div>
-              
-              {/* Decorative Elements */}
-              <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full opacity-20"></div>
-              <div className="absolute bottom-4 left-4 w-12 h-12 bg-gradient-to-br from-navy-600 to-navy-800 rounded-full opacity-30"></div>
             </div>
           </div>
         </div>
 
-        {/* Values Section */}
+        {/* Core Values */}
         <div className="mb-20">
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-navy-900 mb-4">Our Core Values</h3>
-            <p className="text-lg text-navy-600 max-w-2xl mx-auto">
-              The principles that guide everything we do and define who we are as a brand.
+            <h3 className="text-3xl font-bold text-navy-900 mb-4">
+              Our Core Values
+            </h3>
+            <p className="text-lg text-gray-600">
+              The principles that guide everything we do
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
               <div key={index} className="text-center group">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-navy-100 to-navy-200 group-hover:from-amber-500 group-hover:to-amber-600 rounded-full mb-6 transition-all duration-300 text-navy-600 group-hover:text-white">
-                  {value.icon}
+                <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="text-white">
+                    {value.icon}
+                  </div>
                 </div>
-                <h4 className="text-xl font-semibold text-navy-900 mb-3">{value.title}</h4>
-                <p className="text-navy-600 leading-relaxed">{value.description}</p>
+                <h4 className="text-xl font-bold text-navy-900 mb-3">
+                  {value.title}
+                </h4>
+                <p className="text-gray-600 leading-relaxed">
+                  {value.description}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Stats Section */}
-        <div className="bg-gradient-to-r from-navy-900 to-navy-800 rounded-2xl p-12 text-center">
+        {/* Statistics */}
+        <div className="bg-gradient-to-r from-navy-900 to-navy-800 rounded-2xl p-12">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-white mb-4">
+              Our Achievements
+            </h3>
+            <p className="text-navy-200">
+              Numbers that speak for our commitment to excellence
+            </p>
+          </div>
+          
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="">
-                <div className="text-4xl lg:text-5xl font-bold text-amber-400 mb-2">{stat.number}</div>
-                <div className="text-navy-200">{stat.label}</div>
+              <div key={index} className="text-center">
+                <div className="text-4xl lg:text-5xl font-bold text-amber-400 mb-2">
+                  {stat.number}
+                </div>
+                <div className="text-navy-200 font-medium">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>

@@ -6,9 +6,13 @@ export default function Contact() {
     name: '',
     email: '',
     phone: '',
+    whatsapp: '',
     subject: '',
     message: ''
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -17,12 +21,38 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    setIsSubmitting(true);
+    
+    // Create WhatsApp message
+    const whatsappMessage = `Hi! I'm ${formData.name}\n\nEmail: ${formData.email}\nPhone: ${formData.phone}\nSubject: ${formData.subject}\n\nMessage: ${formData.message}`;
+    
+    // Use the WhatsApp number from the form
+    const whatsappNumber = formData.whatsapp;
+    
+    // Create WhatsApp URL
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+    
+    // Simulate form processing
+    setTimeout(() => {
+      setIsSubmitting(false);
+      // Open WhatsApp
+      window.open(whatsappUrl, '_blank');
+      
+      setSubmitStatus('success');
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        whatsapp: '',
+        subject: '',
+        message: ''
+      });
+      
+      // Reset status after 3 seconds
+      setTimeout(() => setSubmitStatus(null), 3000);
+    }, 1000);
   };
 
   const contactInfo = [
@@ -35,8 +65,8 @@ export default function Contact() {
       ),
       title: "Visit Our Store",
       details: [
-        "123 Fashion Street, Commercial Complex",
-        "Mumbai, Maharashtra 400001",
+        "123 Fashion Street, Bandra West",
+        "Mumbai, Maharashtra 400050",
         "India"
       ]
     },
@@ -49,8 +79,8 @@ export default function Contact() {
       title: "Call Us",
       details: [
         "+91 98765 43210",
-        "+91 98765 43211",
-        "Toll Free: 1800-123-4567"
+        "+91 22 2654 7890",
+        "Mon-Sat: 10AM-8PM"
       ]
     },
     {
@@ -63,47 +93,82 @@ export default function Contact() {
       details: [
         "info@hvfashion.com",
         "support@hvfashion.com",
-        "sales@hvfashion.com"
-      ]
-    },
-    {
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-      title: "Business Hours",
-      details: [
-        "Monday - Saturday: 10:00 AM - 9:00 PM",
-        "Sunday: 11:00 AM - 8:00 PM",
-        "Online Support: 24/7"
+        "We reply within 24 hours"
       ]
     }
   ];
 
+  const socialLinks = [
+    {
+      name: "Instagram",
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.004 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.864 3.708 13.713 3.708 12.416s.49-2.448 1.418-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.928.875 1.418 2.026 1.418 3.323s-.49 2.448-1.418 3.275c-.875.807-2.026 1.297-3.323 1.297zm7.83-9.608c-.807 0-1.418-.611-1.418-1.418s.611-1.418 1.418-1.418 1.418.611 1.418 1.418-.611 1.418-1.418 1.418zm1.388 9.608c-1.297 0-2.448-.49-3.323-1.297-.928-.827-1.418-1.978-1.418-3.275s.49-2.448 1.418-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.928.875 1.418 2.026 1.418 3.323s-.49 2.448-1.418 3.275c-.875.807-2.026 1.297-3.323 1.297z"/>
+        </svg>
+      ),
+      url: "#"
+    },
+    {
+      name: "Facebook",
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      ),
+      url: "#"
+    },
+    {
+      name: "Twitter",
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+        </svg>
+      ),
+      url: "#"
+    },
+    {
+      name: "LinkedIn",
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      ),
+      url: "#"
+    }
+  ];
+
   return (
-    <section id="contact" className="py-20 bg-gradient-to-b from-white to-navy-50">
+    <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-navy-600 to-navy-700 rounded-full mb-6">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-          </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-navy-900 mb-4">
-            Get In <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-600">Touch</span>
+            Get In Touch
           </h2>
-          <p className="text-xl text-navy-600 max-w-3xl mx-auto">
-            Have questions about our products or need styling advice? 
-            We&apos;re here to help you find the perfect outfit for every occasion.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Have questions about our products or need styling advice? We're here to help! 
+            Reach out to us and let's create your perfect wardrobe together.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg border border-navy-100">
-            <h3 className="text-2xl font-bold text-navy-900 mb-6">Send us a Message</h3>
+          <div className="bg-gray-50 rounded-2xl p-8">
+            <h3 className="text-2xl font-bold text-navy-900 mb-6">
+              Send us a Message
+            </h3>
+            
+            {submitStatus === 'success' && (
+              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p className="text-green-800 font-medium">Message sent successfully! We'll get back to you soon.</p>
+                </div>
+              </div>
+            )}
+            
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -117,10 +182,11 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
+                    className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white text-navy-900"
                     placeholder="Your full name"
                   />
                 </div>
+                
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-navy-700 mb-2">
                     Email Address *
@@ -132,7 +198,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
+                    className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white text-navy-900"
                     placeholder="your.email@example.com"
                   />
                 </div>
@@ -149,31 +215,47 @@ export default function Contact() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
+                    className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white text-navy-900"
                     placeholder="+91 98765 43210"
                   />
                 </div>
+                
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-navy-700 mb-2">
-                    Subject *
+                  <label htmlFor="whatsapp" className="block text-sm font-medium text-navy-700 mb-2">
+                    WhatsApp Number *
                   </label>
-                  <select
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
+                  <input
+                    type="tel"
+                    id="whatsapp"
+                    name="whatsapp"
+                    value={formData.whatsapp}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
-                  >
-                    <option value="">Select a subject</option>
-                    <option value="product-inquiry">Product Inquiry</option>
-                    <option value="styling-advice">Styling Advice</option>
-                    <option value="size-guide">Size Guide Help</option>
-                    <option value="order-support">Order Support</option>
-                    <option value="feedback">Feedback</option>
-                    <option value="other">Other</option>
-                  </select>
+                    className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white text-navy-900"
+                    placeholder="919876543210 (without +)"
+                  />
                 </div>
+              </div>
+              
+              <div>
+                <label htmlFor="subject" className="block text-sm font-medium text-navy-700 mb-2">
+                  Subject *
+                </label>
+                <select
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white text-navy-900"
+                >
+                  <option value="">Select a subject</option>
+                  <option value="general">General Inquiry</option>
+                  <option value="product">Product Question</option>
+                  <option value="order">Order Support</option>
+                  <option value="styling">Styling Advice</option>
+                  <option value="partnership">Business Partnership</option>
+                </select>
               </div>
               
               <div>
@@ -186,87 +268,101 @@ export default function Contact() {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={6}
-                  className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors resize-none"
+                  rows={5}
+                  className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors resize-none bg-white text-navy-900"
                   placeholder="Tell us how we can help you..."
                 ></textarea>
               </div>
               
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
-                Send Message
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending...
+                  </>
+                ) : (
+                  'Send Message'
+                )}
               </button>
             </form>
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-8">
-            <div className="bg-gradient-to-br from-navy-900 to-navy-800 rounded-2xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-              <p className="text-navy-200 mb-8">
-                Ready to elevate your style? Reach out to us through any of the channels below. 
-                Our fashion experts are here to assist you.
-              </p>
-              
-              <div className="space-y-6">
-                {contactInfo.map((info, index) => (
-                  <div key={index} className="flex items-start space-x-4">
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 bg-amber-500 rounded-lg flex items-center justify-center text-white">
-                        {info.icon}
-                      </div>
-                    </div>
-                    <div>
-                      <h4 className="text-lg font-semibold mb-2">{info.title}</h4>
-                      <div className="space-y-1">
-                        {info.details.map((detail, idx) => (
-                          <p key={idx} className="text-navy-200">{detail}</p>
-                        ))}
-                      </div>
+          <div>
+            <h3 className="text-2xl font-bold text-navy-900 mb-8">
+              Contact Information
+            </h3>
+            
+            <div className="space-y-8 mb-12">
+              {contactInfo.map((info, index) => (
+                <div key={index} className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="text-white">
+                      {info.icon}
                     </div>
                   </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-navy-900 mb-2">
+                      {info.title}
+                    </h4>
+                    <div className="space-y-1">
+                      {info.details.map((detail, idx) => (
+                        <p key={idx} className="text-gray-600">
+                          {detail}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Social Media */}
+            <div>
+              <h4 className="text-lg font-semibold text-navy-900 mb-4">
+                Follow Us
+              </h4>
+              <div className="flex space-x-4">
+                {socialLinks.map((social, index) => (
+                  <a
+                    key={index}
+                    href={social.url}
+                    className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-gray-600 hover:bg-amber-500 hover:text-white transition-colors duration-300"
+                    aria-label={social.name}
+                  >
+                    {social.icon}
+                  </a>
                 ))}
               </div>
             </div>
             
-            {/* Map Placeholder */}
-            <div className="bg-gradient-to-br from-navy-100 to-navy-200 rounded-2xl p-8 h-64 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-navy-600 to-navy-700 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
+            {/* Business Hours */}
+            <div className="mt-8 p-6 bg-navy-50 rounded-xl">
+              <h4 className="text-lg font-semibold text-navy-900 mb-3">
+                Business Hours
+              </h4>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Monday - Friday</span>
+                  <span className="text-navy-900 font-medium">10:00 AM - 8:00 PM</span>
                 </div>
-                <h4 className="text-xl font-bold text-navy-900 mb-2">Find Our Store</h4>
-                <p className="text-navy-600">Interactive map coming soon</p>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Saturday</span>
+                  <span className="text-navy-900 font-medium">10:00 AM - 6:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Sunday</span>
+                  <span className="text-navy-900 font-medium">Closed</span>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        
-        {/* Social Media Links */}
-        <div className="mt-16 text-center">
-          <h3 className="text-2xl font-bold text-navy-900 mb-8">Follow Us</h3>
-          <div className="flex justify-center space-x-6">
-            {[
-              { name: 'Facebook', icon: 'M18.77 7.46H15.5v-1.9c0-.9.6-1.1 1-1.1h2.2V2.5h-3c-2.8 0-4.7 2.1-4.7 5.1v1.9h-2v2h2v8h3v-8h2.6l.37-2z' },
-              { name: 'Instagram', icon: 'M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.3-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.3 2.2-.4 1.3-.1 1.7-.1 4.9-.1zm0-2.2C8.7 0 8.3 0 7 .1 5.7.2 4.8.4 4.1.7c-.8.3-1.5.7-2.2 1.4C1.2 2.8.8 3.5.5 4.3.2 5 0 5.9 0 7.2v9.6c0 1.3.2 2.2.5 2.9.3.8.7 1.5 1.4 2.2.7.7 1.4 1.1 2.2 1.4.7.3 1.6.5 2.9.5h9.6c1.3 0 2.2-.2 2.9-.5.8-.3 1.5-.7 2.2-1.4.7-.7 1.1-1.4 1.4-2.2.3-.7.5-1.6.5-2.9V7.2c0-1.3-.2-2.2-.5-2.9-.3-.8-.7-1.5-1.4-2.2C18.5 1.4 17.8 1 17 .7 16.3.4 15.4.2 14.1.1 12.8 0 12.4 0 12 0z' },
-              { name: 'Twitter', icon: 'M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z' },
-              { name: 'LinkedIn', icon: 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z' }
-            ].map((social, index) => (
-              <a
-                key={index}
-                href="#"
-                className="w-12 h-12 bg-gradient-to-br from-navy-600 to-navy-700 hover:from-amber-500 hover:to-amber-600 rounded-full flex items-center justify-center text-white transition-all duration-300 transform hover:scale-110"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d={social.icon} />
-                </svg>
-              </a>
-            ))}
           </div>
         </div>
       </div>
