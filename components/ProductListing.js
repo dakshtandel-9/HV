@@ -4,6 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { blazerImages } from '../app/data/blazerImages';
 import { suitsImages } from '../app/data/suitsImages';
+import { jacketsImages } from '../app/data/jacketsImages';
+import { waistCoatsImages } from '../app/data/waistCoatsImages';
+import { shirtsImages } from '../app/data/shirtsImages';
 
 export default function ProductListing() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -33,6 +36,42 @@ export default function ProductListing() {
 
   const suitTypes = [
     'Business Suit', 'Formal Suit', 'Wedding Suit', 'Tuxedo', 'Dinner Suit'
+  ];
+
+  // Jacket style names for variety
+  const jacketStyles = [
+    'Casual', 'Bomber', 'Denim', 'Leather', 'Windbreaker', 'Track', 'Varsity', 'Field',
+    'Puffer', 'Quilted', 'Fleece', 'Hoodie', 'Zip-up', 'Button-up', 'Oversized', 'Fitted',
+    'Vintage', 'Modern', 'Classic', 'Sporty', 'Urban', 'Outdoor', 'Winter', 'Spring',
+    'Black', 'Navy', 'Grey', 'Brown', 'Green', 'Blue', 'Red', 'White'
+  ];
+
+  const jacketTypes = [
+    'Bomber Jacket', 'Denim Jacket', 'Leather Jacket', 'Windbreaker', 'Track Jacket'
+  ];
+
+  // Waist coat style names for variety
+  const waistCoatStyles = [
+    'Classic', 'Formal', 'Vintage', 'Modern', 'Traditional', 'Elegant', 'Premium', 'Designer',
+    'Sophisticated', 'Contemporary', 'Luxury', 'Tailored', 'Slim Fit', 'Regular Fit',
+    'Single Breasted', 'Double Breasted', 'Navy', 'Black', 'Charcoal', 'Grey', 'Brown',
+    'Pinstripe', 'Textured', 'Wool', 'Cotton', 'Silk', 'Velvet', 'Tweed', 'Linen'
+  ];
+
+  const waistCoatTypes = [
+    'Formal Waistcoat', 'Wedding Waistcoat', 'Business Waistcoat', 'Evening Waistcoat', 'Casual Waistcoat'
+  ];
+
+  // Shirt style names for variety
+  const shirtStyles = [
+    'Formal', 'Casual', 'Business', 'Dress', 'Oxford', 'Polo', 'Henley', 'Button-down',
+    'Slim Fit', 'Regular Fit', 'Relaxed Fit', 'Classic', 'Modern', 'Premium', 'Designer',
+    'Cotton', 'Linen', 'Silk', 'Denim', 'Flannel', 'Chambray', 'Poplin', 'Twill'
+  ];
+
+  const shirtTypes = [
+    'Dress Shirt', 'Casual Shirt', 'Business Shirt', 'Polo Shirt', 'Henley Shirt',
+    'Oxford Shirt', 'Flannel Shirt', 'Denim Shirt', 'Linen Shirt', 'T-Shirt'
   ];
 
   const badges = ['Featured', 'Premium', 'Best Seller', 'New', 'Popular', 'Limited', 'Exclusive'];
@@ -75,10 +114,67 @@ export default function ProductListing() {
     };
   });
 
-  // Product data with all blazers and suits
-  const products = [...blazerProducts, ...suitsProducts];
+  // Generate all jackets products
+  const jacketsProducts = jacketsImages.map((imageUrl, index) => {
+    const styleIndex = index % jacketStyles.length;
+    const typeIndex = index % jacketTypes.length;
+    const badgeIndex = index % badges.length;
+    
+    return {
+      id: index + blazerImages.length + suitsImages.length + 2, // Continue from suits IDs
+      name: 'HV jackets',
+      category: 'Jackets',
+      image: imageUrl,
+      description: `Stylish ${jacketStyles[styleIndex].toLowerCase()} ${jacketTypes[typeIndex].toLowerCase()} perfect for casual and outdoor activities`,
+      features: ['Comfortable Fit', 'Durable Material', 'Versatile Style'],
+      badge: badges[badgeIndex],
+      rating: 4.5 + ((index * 13) % 40) / 100, // Deterministic rating between 4.5-4.9
+      reviews: ((index * 19) % 150) + 20 // Deterministic reviews between 20-170
+    };
+  });
 
-  const categories = ['All', 'Blazer', 'Suits'];
+  // Generate all waist coats products
+  const waistCoatsProducts = waistCoatsImages.map((imageUrl, index) => {
+    const styleIndex = index % waistCoatStyles.length;
+    const typeIndex = index % waistCoatTypes.length;
+    const badgeIndex = index % badges.length;
+    
+    return {
+      id: index + blazerImages.length + suitsImages.length + jacketsImages.length + 2, // Continue from jackets IDs
+      name: 'HV waist coats',
+      category: 'Waist Coats',
+      image: imageUrl,
+      description: `Elegant ${waistCoatStyles[styleIndex].toLowerCase()} ${waistCoatTypes[typeIndex].toLowerCase()} perfect for formal occasions and layering`,
+      features: ['Premium Fabric', 'Classic Design', 'Formal Elegance'],
+      badge: badges[badgeIndex],
+      rating: 4.5 + ((index * 15) % 40) / 100, // Deterministic rating between 4.5-4.9
+      reviews: ((index * 21) % 150) + 20 // Deterministic reviews between 20-170
+    };
+  });
+
+  // Generate all shirts products
+  const shirtsProducts = shirtsImages.map((imageUrl, index) => {
+    const styleIndex = index % shirtStyles.length;
+    const typeIndex = index % shirtTypes.length;
+    const badgeIndex = index % badges.length;
+    
+    return {
+      id: index + blazerImages.length + suitsImages.length + jacketsImages.length + waistCoatsImages.length + 2, // Continue from waist coats IDs
+      name: 'HV shirts',
+      category: 'Shirts',
+      image: imageUrl,
+      description: `Comfortable ${shirtStyles[styleIndex].toLowerCase()} ${shirtTypes[typeIndex].toLowerCase()} perfect for everyday wear and professional settings`,
+      features: ['Comfortable Fabric', 'Versatile Design', 'Easy Care'],
+      badge: badges[badgeIndex],
+      rating: 4.5 + ((index * 17) % 40) / 100, // Deterministic rating between 4.5-4.9
+      reviews: ((index * 23) % 150) + 20 // Deterministic reviews between 20-170
+    };
+  });
+
+  // Product data with all blazers, suits, jackets, waist coats, and shirts
+  const products = [...blazerProducts, ...suitsProducts, ...jacketsProducts, ...waistCoatsProducts, ...shirtsProducts];
+
+  const categories = ['All', 'Blazer', 'Suits', 'Jackets', 'Waist Coats', 'Shirts'];
   const [searchTerm, setSearchTerm] = useState('');
   const [displayCount, setDisplayCount] = useState(12); // Initial load count
 

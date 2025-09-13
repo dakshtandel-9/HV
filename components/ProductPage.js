@@ -4,6 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { blazerImages } from '../app/data/blazerImages';
 import { suitsImages } from '../app/data/suitsImages';
+import { jacketsImages } from '../app/data/jacketsImages';
+import { waistCoatsImages } from '../app/data/waistCoatsImages';
+import { shirtsImages } from '../app/data/shirtsImages';
 
 export default function ProductPage({ productId }) {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -34,6 +37,40 @@ export default function ProductPage({ productId }) {
   const suitTypes = [
     'Business Suit', 'Formal Suit', 'Wedding Suit', 'Tuxedo', 'Dinner Suit',
     'Two Piece', 'Three Piece', 'Single Breasted', 'Double Breasted', 'Slim Fit'
+  ];
+
+  const jacketStyles = [
+    'Casual', 'Bomber', 'Denim', 'Leather', 'Windbreaker', 'Track', 'Varsity', 'Field',
+    'Puffer', 'Quilted', 'Fleece', 'Hoodie', 'Zip-up', 'Button-up', 'Oversized', 'Fitted',
+    'Vintage', 'Modern', 'Classic', 'Sporty', 'Urban', 'Outdoor', 'Winter', 'Spring'
+  ];
+
+  const jacketTypes = [
+    'Bomber Jacket', 'Denim Jacket', 'Leather Jacket', 'Windbreaker', 'Track Jacket',
+    'Varsity Jacket', 'Field Jacket', 'Puffer Jacket', 'Quilted Jacket', 'Fleece Jacket'
+  ];
+
+  const waistCoatStyles = [
+    'Classic', 'Formal', 'Vintage', 'Modern', 'Traditional', 'Elegant', 'Premium', 'Designer',
+    'Sophisticated', 'Contemporary', 'Luxury', 'Tailored', 'Slim Fit', 'Regular Fit',
+    'Single Breasted', 'Double Breasted', 'Textured', 'Wool', 'Cotton', 'Silk'
+  ];
+
+  const waistCoatTypes = [
+    'Formal Waistcoat', 'Wedding Waistcoat', 'Business Waistcoat', 'Evening Waistcoat', 'Casual Waistcoat',
+    'Three Piece Waistcoat', 'Dress Waistcoat', 'Tuxedo Waistcoat', 'Vest', 'Gilet'
+  ];
+
+  // Shirt style names for variety
+  const shirtStyles = [
+    'Formal', 'Casual', 'Business', 'Dress', 'Oxford', 'Polo', 'Henley', 'Button-down',
+    'Slim Fit', 'Regular Fit', 'Relaxed Fit', 'Classic', 'Modern', 'Premium', 'Designer',
+    'Cotton', 'Linen', 'Silk', 'Denim', 'Flannel', 'Chambray', 'Poplin', 'Twill'
+  ];
+
+  const shirtTypes = [
+    'Dress Shirt', 'Casual Shirt', 'Business Shirt', 'Polo Shirt', 'Henley Shirt',
+    'Oxford Shirt', 'Flannel Shirt', 'Denim Shirt', 'Linen Shirt', 'T-Shirt'
   ];
 
   const badges = ['Featured', 'New Arrival', 'Best Seller', 'Premium', 'Limited Edition', 'Professional', 'Casual', 'Formal'];
@@ -124,8 +161,137 @@ export default function ProductPage({ productId }) {
     };
   });
 
-  // Create products object with all blazers and suits
-  const allProducts = [...blazerProducts, ...suitsProducts];
+  // Generate jackets products dynamically
+  const jacketsProducts = jacketsImages.map((imageUrl, index) => {
+    const productId = index + blazerImages.length + suitsImages.length + 2; // Continue from suits IDs
+    const styleIndex = index % jacketStyles.length;
+    const typeIndex = index % jacketTypes.length;
+    const badgeIndex = index % badges.length;
+    
+    return {
+      id: productId,
+      name: 'HV jackets',
+      category: 'Jackets',
+      images: [
+        imageUrl,
+        imageUrl
+      ],
+      description: `Experience comfort and style with our ${jacketStyles[styleIndex]} ${jacketTypes[typeIndex]}. Perfect for casual wear and outdoor activities with modern design and quality materials.`,
+      features: [
+        'Comfortable Fit',
+        'Durable Material',
+        'Versatile Style',
+        'Modern Design',
+        'Quality Construction'
+      ],
+      specifications: {
+        'Material': index % 3 === 0 ? '100% Cotton' : index % 3 === 1 ? '80% Cotton, 20% Polyester' : '100% Polyester',
+        'Fit': index % 2 === 0 ? 'Regular Fit' : 'Relaxed Fit',
+        'Care': index % 2 === 0 ? 'Machine Washable' : 'Hand Wash',
+        'Origin': 'Made in India',
+        'Style': index % 2 === 0 ? 'Zip-up' : 'Button-up',
+        'Season': index % 2 === 0 ? 'All Season' : 'Winter'
+      },
+      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+      colors: index % 4 === 0 ? ['Black', 'Navy', 'Grey', 'Brown'] : 
+              index % 4 === 1 ? ['Blue', 'Green', 'Red', 'White'] :
+              index % 4 === 2 ? ['Grey', 'Black', 'Navy', 'Khaki'] :
+              ['Brown', 'Olive', 'Black', 'Blue'],
+      badge: badges[badgeIndex],
+      inStock: true,
+      rating: 4.5 + ((index * 13) % 40) / 100, // Deterministic rating between 4.5-4.9
+      reviews: ((index * 19) % 150) + 20 // Deterministic reviews between 20-170
+    };
+  });
+
+  // Generate waist coats products dynamically
+  const waistCoatsProducts = waistCoatsImages.map((imageUrl, index) => {
+    const productId = index + blazerImages.length + suitsImages.length + jacketsImages.length + 2; // Continue from jackets IDs
+    const styleIndex = index % waistCoatStyles.length;
+    const typeIndex = index % waistCoatTypes.length;
+    const badgeIndex = index % badges.length;
+    
+    return {
+      id: productId,
+      name: 'HV waist coats',
+      category: 'Waist Coats',
+      images: [
+        imageUrl,
+        imageUrl
+      ],
+      description: `Experience elegance with our ${waistCoatStyles[styleIndex]} ${waistCoatTypes[typeIndex]}. Perfect for formal occasions and layering, combining classic style with modern comfort.`,
+      features: [
+        'Premium Fabric',
+        'Classic Design',
+        'Formal Elegance',
+        'Perfect Fit',
+        'Quality Construction'
+      ],
+      specifications: {
+        'Material': index % 3 === 0 ? '80% Wool, 20% Silk' : index % 3 === 1 ? '70% Cotton, 30% Polyester' : '90% Wool, 10% Cashmere',
+        'Fit': index % 2 === 0 ? 'Slim Fit' : 'Regular Fit',
+        'Care': index % 2 === 0 ? 'Dry Clean Only' : 'Professional Clean',
+        'Origin': 'Made in India',
+        'Style': index % 2 === 0 ? 'Single Breasted' : 'Double Breasted',
+        'Lining': index % 2 === 0 ? 'Full Lined' : 'Half Lined'
+      },
+      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+      colors: index % 4 === 0 ? ['Navy', 'Charcoal', 'Black', 'Grey'] : 
+              index % 4 === 1 ? ['Brown', 'Beige', 'Navy', 'Black'] :
+              index % 4 === 2 ? ['Black', 'Charcoal', 'Navy', 'Brown'] :
+              ['Grey', 'Navy', 'Black', 'Burgundy'],
+      badge: badges[badgeIndex],
+      inStock: true,
+      rating: 4.5 + ((index * 15) % 40) / 100, // Deterministic rating between 4.5-4.9
+      reviews: ((index * 21) % 150) + 20 // Deterministic reviews between 20-170
+    };
+  });
+
+  // Generate shirts products dynamically
+  const shirtsProducts = shirtsImages.map((imageUrl, index) => {
+    const productId = index + blazerImages.length + suitsImages.length + jacketsImages.length + waistCoatsImages.length + 2; // Continue from waist coats IDs
+    const styleIndex = index % shirtStyles.length;
+    const typeIndex = index % shirtTypes.length;
+    const badgeIndex = index % badges.length;
+    
+    return {
+      id: productId,
+      name: 'HV shirts',
+      category: 'Shirts',
+      images: [
+        imageUrl,
+        imageUrl
+      ],
+      description: `Experience comfort and style with our ${shirtStyles[styleIndex]} ${shirtTypes[typeIndex]}. Perfect for professional and casual wear with premium fabric and modern design.`,
+      features: [
+        'Comfortable Fabric',
+        'Versatile Design',
+        'Easy Care',
+        'Modern Fit',
+        'Quality Construction'
+      ],
+      specifications: {
+        'Material': index % 3 === 0 ? '100% Cotton' : index % 3 === 1 ? '60% Cotton, 40% Polyester' : '80% Cotton, 20% Polyester',
+        'Fit': index % 2 === 0 ? 'Slim Fit' : 'Regular Fit',
+        'Care': index % 2 === 0 ? 'Machine Washable' : 'Easy Care',
+        'Origin': 'Made in India',
+        'Style': index % 2 === 0 ? 'Button-down' : 'Classic',
+        'Collar': index % 2 === 0 ? 'Spread Collar' : 'Point Collar'
+      },
+      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+      colors: index % 4 === 0 ? ['White', 'Blue', 'Black', 'Grey'] : 
+              index % 4 === 1 ? ['Pink', 'Green', 'Navy', 'White'] :
+              index % 4 === 2 ? ['Grey', 'White', 'Blue', 'Black'] :
+              ['Navy', 'White', 'Light Blue', 'Beige'],
+      badge: badges[badgeIndex],
+      inStock: true,
+      rating: 4.5 + ((index * 17) % 40) / 100, // Deterministic rating between 4.5-4.9
+      reviews: ((index * 23) % 150) + 20 // Deterministic reviews between 20-170
+    };
+  });
+
+  // Create products object with all blazers, suits, jackets, waist coats, and shirts
+  const allProducts = [...blazerProducts, ...suitsProducts, ...jacketsProducts, ...waistCoatsProducts, ...shirtsProducts];
   const products = Object.fromEntries(allProducts.map(product => [product.id, product]));
 
   const product = products[productId] || products[2];
