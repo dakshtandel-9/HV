@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { blazerImages } from '../app/data/blazerImages';
+import { suitsImages } from '../app/data/suitsImages';
 
 export default function ProductPage({ productId }) {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -22,6 +23,17 @@ export default function ProductPage({ productId }) {
   const blazerTypes = [
     'Single Breasted', 'Double Breasted', 'Notched Lapel', 'Peak Lapel', 'Shawl Collar',
     'Two Button', 'Three Button', 'Unstructured', 'Half Lined', 'Fully Lined'
+  ];
+
+  const suitStyles = [
+    'Executive', 'Classic', 'Modern', 'Formal', 'Business', 'Premium', 'Professional',
+    'Elegant', 'Sophisticated', 'Contemporary', 'Traditional', 'Luxury', 'Designer', 'Tailored',
+    'Slim Fit', 'Regular Fit', 'Three Piece', 'Two Piece', 'Navy', 'Black', 'Charcoal'
+  ];
+
+  const suitTypes = [
+    'Business Suit', 'Formal Suit', 'Wedding Suit', 'Tuxedo', 'Dinner Suit',
+    'Two Piece', 'Three Piece', 'Single Breasted', 'Double Breasted', 'Slim Fit'
   ];
 
   const badges = ['Featured', 'New Arrival', 'Best Seller', 'Premium', 'Limited Edition', 'Professional', 'Casual', 'Formal'];
@@ -69,8 +81,52 @@ export default function ProductPage({ productId }) {
     };
   });
 
-  // Create products object with all blazers
-  const products = Object.fromEntries(blazerProducts.map(product => [product.id, product]));
+  // Generate suits products dynamically
+  const suitsProducts = suitsImages.map((imageUrl, index) => {
+    const productId = index + blazerImages.length + 2; // Continue from blazer IDs
+    const styleIndex = index % suitStyles.length;
+    const typeIndex = index % suitTypes.length;
+    const badgeIndex = index % badges.length;
+    
+    return {
+      id: productId,
+      name: 'HV suits',
+      category: 'Suits',
+      images: [
+        imageUrl,
+        imageUrl
+      ],
+      description: `Experience premium quality with our ${suitStyles[styleIndex]} ${suitTypes[typeIndex]}. Crafted with attention to detail, this suit combines style and comfort for the modern professional.`,
+      features: [
+        'Premium Fabric',
+        'Professional Tailoring',
+        'Comfortable Fit',
+        'Versatile Design',
+        'Quality Construction'
+      ],
+      specifications: {
+        'Material': index % 3 === 0 ? '70% Wool, 30% Polyester' : index % 3 === 1 ? '60% Cotton, 40% Polyester' : '80% Wool, 20% Polyester',
+        'Fit': index % 2 === 0 ? 'Slim Fit' : 'Regular Fit',
+        'Care': index % 2 === 0 ? 'Dry Clean Only' : 'Machine Washable',
+        'Origin': 'Made in India',
+        'Style': index % 2 === 0 ? 'Two Piece' : 'Three Piece',
+        'Lining': index % 2 === 0 ? 'Full Lined' : 'Half Lined'
+      },
+      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+      colors: index % 4 === 0 ? ['Navy', 'Charcoal', 'Black', 'Brown'] : 
+              index % 4 === 1 ? ['Beige', 'Olive', 'Navy', 'Gray'] :
+              index % 4 === 2 ? ['Black', 'Charcoal', 'Navy', 'Brown'] :
+              ['Gray', 'Navy', 'Black', 'Beige'],
+      badge: badges[badgeIndex],
+      inStock: true,
+      rating: 4.5 + ((index * 11) % 40) / 100, // Deterministic rating between 4.5-4.9
+      reviews: ((index * 17) % 150) + 20 // Deterministic reviews between 20-170
+    };
+  });
+
+  // Create products object with all blazers and suits
+  const allProducts = [...blazerProducts, ...suitsProducts];
+  const products = Object.fromEntries(allProducts.map(product => [product.id, product]));
 
   const product = products[productId] || products[2];
 

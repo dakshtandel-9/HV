@@ -56,10 +56,29 @@ export default function ProductListing() {
     };
   });
 
-  // Product data with all blazers
-  const products = blazerProducts;
+  // Generate all suits products
+  const suitsProducts = suitsImages.map((imageUrl, index) => {
+    const styleIndex = index % suitStyles.length;
+    const typeIndex = index % suitTypes.length;
+    const badgeIndex = index % badges.length;
+    
+    return {
+      id: index + blazerImages.length + 2, // Continue from blazer IDs
+      name: 'HV suits',
+      category: 'Suits',
+      image: imageUrl,
+      description: `Premium ${suitStyles[styleIndex].toLowerCase()} ${suitTypes[typeIndex].toLowerCase()} crafted with finest materials for the modern professional`,
+      features: ['Premium Fabric', 'Tailored Fit', 'Professional Look'],
+      badge: badges[badgeIndex],
+      rating: 4.5 + ((index * 11) % 40) / 100, // Deterministic rating between 4.5-4.9
+      reviews: ((index * 17) % 150) + 20 // Deterministic reviews between 20-170
+    };
+  });
 
-  const categories = ['All', 'Blazer'];
+  // Product data with all blazers and suits
+  const products = [...blazerProducts, ...suitsProducts];
+
+  const categories = ['All', 'Blazer', 'Suits'];
   const [searchTerm, setSearchTerm] = useState('');
   const [displayCount, setDisplayCount] = useState(12); // Initial load count
 
