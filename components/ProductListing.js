@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { blazerImages } from '../app/data/blazerImages';
+import { suitsImages } from '../app/data/suitsImages';
 
 export default function ProductListing() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -20,6 +21,18 @@ export default function ProductListing() {
 
   const blazerTypes = [
     'Blazer', 'Sport Coat', 'Suit Jacket', 'Dinner Jacket', 'Tuxedo Jacket'
+  ];
+
+  // Suit style names for variety
+  const suitStyles = [
+    'Executive', 'Classic', 'Modern', 'Formal', 'Business', 'Premium', 'Professional',
+    'Elegant', 'Sophisticated', 'Contemporary', 'Traditional', 'Luxury', 'Designer', 'Tailored',
+    'Slim Fit', 'Regular Fit', 'Three Piece', 'Two Piece', 'Navy', 'Black', 'Charcoal',
+    'Grey', 'Blue', 'Brown', 'Pinstripe', 'Textured', 'Wool', 'Cotton', 'Linen', 'Velvet'
+  ];
+
+  const suitTypes = [
+    'Business Suit', 'Formal Suit', 'Wedding Suit', 'Tuxedo', 'Dinner Suit'
   ];
 
   const badges = ['Featured', 'Premium', 'Best Seller', 'New', 'Popular', 'Limited', 'Exclusive'];
