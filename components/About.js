@@ -68,7 +68,7 @@ export default function About() {
               Our Story
             </h3>
             <p className="text-lg text-gray-600 mb-6">
-              What started as a small tailoring shop in Hyderabad has grown into one of India's 
+              What started as a small tailoring shop in Hyderabad has grown into one of India&apos;s 
               most trusted premium fashion brands. Our journey began with a simple belief: 
               every man deserves to look and feel his best.
             </p>

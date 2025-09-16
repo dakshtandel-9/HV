@@ -98,7 +98,7 @@ export default function TrustBadges() {
             Why Choose HV Fashion?
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Your trust is our priority. Here's why thousands of customers choose us for their fashion needs.
+            Your trust is our priority. Here&apos;s why thousands of customers choose us for their fashion needs.
           </p>
         </div>
 
