@@ -381,7 +381,7 @@ export default function ProductPage({ productId }) {
     }
     
     const message = `Hi! I'm interested in ${product.name}\n\nProduct Link: ${window.location.href}\nName: ${formData.name}\nSize: ${formData.size}\nPhone: ${formData.phone}`;
-    const whatsappUrl = `https://wa.me/916363073455?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/08977009210?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 

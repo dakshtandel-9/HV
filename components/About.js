@@ -44,7 +44,7 @@ export default function About() {
     { number: "25+", label: "Years of Excellence" },
     { number: "50K+", label: "Happy Customers" },
     { number: "500+", label: "Premium Products" },
-    { number: "99%", label: "Satisfaction Rate" }
+    { number: "100%", label: "Satisfaction Rate" }
   ];
 
   return (
@@ -68,7 +68,7 @@ export default function About() {
               Our Story
             </h3>
             <p className="text-lg text-gray-600 mb-6">
-              What started as a small tailoring shop in Mumbai has grown into one of India's 
+              What started as a small tailoring shop in Hyderabad has grown into one of India's 
               most trusted premium fashion brands. Our journey began with a simple belief: 
               every man deserves to look and feel his best.
             </p>
@@ -109,7 +109,7 @@ export default function About() {
             
             <div className="absolute -bottom-4 -left-4 bg-white rounded-lg shadow-lg p-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-amber-600">99%</div>
+                <div className="text-2xl font-bold text-amber-600">100%</div>
                 <div className="text-sm text-gray-600">Satisfaction</div>
               </div>
             </div>

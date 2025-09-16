@@ -24,10 +24,6 @@ export default function Home() {
         <About />
       </section>
 
-      {/* Trust Badges Section */}
-      <section id="trust" className="scroll-mt-20">
-        <TrustBadges />
-      </section>
 
       {/* Contact Section */}
       <section id="contact" className="scroll-mt-20">

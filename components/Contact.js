@@ -25,11 +25,18 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     
+    // Validate required fields
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      alert('Please fill in all required fields.');
+      setIsSubmitting(false);
+      return;
+    }
+    
     // Create WhatsApp message
     const whatsappMessage = `Hi! I'm ${formData.name}\n\nEmail: ${formData.email}\nPhone: ${formData.phone}\nSubject: ${formData.subject}\n\nMessage: ${formData.message}`;
     
-    // Use the WhatsApp number from the form
-    const whatsappNumber = formData.whatsapp;
+    // Use the WhatsApp number from the form, or default to business number
+    const whatsappNumber = formData.whatsapp || '08977009210';
     
     // Create WhatsApp URL
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
@@ -65,9 +72,7 @@ export default function Contact() {
       ),
       title: "Visit Our Store",
       details: [
-        "123 Fashion Street, Bandra West",
-        "Mumbai, Maharashtra 400050",
-        "India"
+        "5/9/2012, Flat NO. F-3, Samrat R Complex, Saifabad, OPP RBI, Hyderabad, Telangana 500004"
       ]
     },
     {
@@ -78,8 +83,7 @@ export default function Contact() {
       ),
       title: "Call Us",
       details: [
-        "+91 98765 43210",
-        "+91 22 2654 7890",
+        "08977009210",
         "Mon-Sat: 10AM-8PM"
       ]
     },
@@ -216,13 +220,13 @@ export default function Contact() {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white text-navy-900"
-                    placeholder="+91 98765 43210"
+                    placeholder="08977009210"
                   />
                 </div>
                 
                 <div>
                   <label htmlFor="whatsapp" className="block text-sm font-medium text-navy-700 mb-2">
-                    WhatsApp Number *
+                    WhatsApp Number (optional)
                   </label>
                   <input
                     type="tel"
@@ -230,10 +234,10 @@ export default function Contact() {
                     name="whatsapp"
                     value={formData.whatsapp}
                     onChange={handleChange}
-                    required
                     className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-colors bg-white text-navy-900"
-                    placeholder="919876543210 (without +)"
+                    placeholder="08977009210 (without +)"
                   />
+                  <p className="text-xs text-gray-500 mt-1">Leave empty to use our business WhatsApp</p>
                 </div>
               </div>
               
@@ -350,16 +354,35 @@ export default function Contact() {
               </h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Monday - Friday</span>
+                  <span className="text-gray-600">Monday</span>
+                  <span className="text-navy-900 font-medium">10:00 AM - 8:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Tuesday</span>
+                  <span className="text-navy-900 font-medium">10:00 AM - 8:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Wednesday</span>
+                  <span className="text-navy-900 font-medium">10:00 AM - 8:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Thursday</span>
+                  <span className="text-navy-900 font-medium">10:00 AM - 8:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Friday</span>
                   <span className="text-navy-900 font-medium">10:00 AM - 8:00 PM</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Saturday</span>
-                  <span className="text-navy-900 font-medium">10:00 AM - 6:00 PM</span>
+                  <span className="text-navy-900 font-medium">10:00 AM - 8:00 PM</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Sunday</span>
-                  <span className="text-navy-900 font-medium">Closed</span>
+                  <span className="text-gray-600">Sunday (Bathukamma)</span>
+                  <span className="text-navy-900 font-medium">11:00 AM - 7:00 PM*</span>
+                </div>
+                <div className="text-xs text-gray-500 mt-2">
+                  *Hours might differ
                 </div>
               </div>
             </div>
