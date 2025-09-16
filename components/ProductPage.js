@@ -119,7 +119,7 @@ export default function ProductPage({ productId }) {
         'Style': index % 2 === 0 ? 'Single Breasted' : 'Double Breasted',
         'Lining': index % 2 === 0 ? 'Full Lined' : 'Half Lined'
       },
-      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+      sizes: ['S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL', '6XL'],
       colors: index % 4 === 0 ? ['Navy', 'Charcoal', 'Black', 'Brown'] : 
               index % 4 === 1 ? ['Beige', 'Olive', 'Navy', 'Gray'] :
               index % 4 === 2 ? ['Black', 'Charcoal', 'Navy', 'Brown'] :
@@ -162,7 +162,7 @@ export default function ProductPage({ productId }) {
         'Style': index % 2 === 0 ? 'Two Piece' : 'Three Piece',
         'Lining': index % 2 === 0 ? 'Full Lined' : 'Half Lined'
       },
-      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+      sizes: ['S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL', '6XL'],
       colors: index % 4 === 0 ? ['Navy', 'Charcoal', 'Black', 'Brown'] : 
               index % 4 === 1 ? ['Beige', 'Olive', 'Navy', 'Gray'] :
               index % 4 === 2 ? ['Black', 'Charcoal', 'Navy', 'Brown'] :
@@ -205,7 +205,7 @@ export default function ProductPage({ productId }) {
         'Style': index % 2 === 0 ? 'Zip-up' : 'Button-up',
         'Season': index % 2 === 0 ? 'All Season' : 'Winter'
       },
-      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+      sizes: ['S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL', '6XL'],
       colors: index % 4 === 0 ? ['Black', 'Navy', 'Grey', 'Brown'] : 
               index % 4 === 1 ? ['Blue', 'Green', 'Red', 'White'] :
               index % 4 === 2 ? ['Grey', 'Black', 'Navy', 'Khaki'] :
@@ -248,7 +248,7 @@ export default function ProductPage({ productId }) {
         'Style': index % 2 === 0 ? 'Single Breasted' : 'Double Breasted',
         'Lining': index % 2 === 0 ? 'Full Lined' : 'Half Lined'
       },
-      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+      sizes: ['S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL', '6XL'],
       colors: index % 4 === 0 ? ['Navy', 'Charcoal', 'Black', 'Grey'] : 
               index % 4 === 1 ? ['Brown', 'Beige', 'Navy', 'Black'] :
               index % 4 === 2 ? ['Black', 'Charcoal', 'Navy', 'Brown'] :
@@ -291,7 +291,7 @@ export default function ProductPage({ productId }) {
         'Style': index % 2 === 0 ? 'Button-down' : 'Classic',
         'Collar': index % 2 === 0 ? 'Spread Collar' : 'Point Collar'
       },
-      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+      sizes: ['S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL', '6XL'],
       colors: index % 4 === 0 ? ['White', 'Blue', 'Black', 'Grey'] : 
               index % 4 === 1 ? ['Pink', 'Green', 'Navy', 'White'] :
               index % 4 === 2 ? ['Grey', 'White', 'Blue', 'Black'] :

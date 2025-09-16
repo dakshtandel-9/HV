@@ -57,7 +57,7 @@ export default function Header() {
                 Home
               </button>
               <Link href="/products" className="text-navy-700 hover:text-navy-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Products
+Company Outlet
               </Link>
               
 
@@ -69,11 +69,6 @@ export default function Header() {
                 Contact
               </button>
               
-              {/* Sale with badge */}
-              <Link href="/products" className="relative text-navy-700 hover:text-navy-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Sale
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">New</span>
-              </Link>
             </div>
           </nav>
 
