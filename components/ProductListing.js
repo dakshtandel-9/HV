@@ -7,6 +7,7 @@ import { suitsImages } from '../app/data/suitsImages';
 import { jacketsImages } from '../app/data/jacketsImages';
 import { waistCoatsImages } from '../app/data/waistCoatsImages';
 import { shirtsImages } from '../app/data/shirtsImages';
+import { accessoriesImages } from '../app/data/accessoriesImages';
 
 export default function ProductListing() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -72,6 +73,18 @@ export default function ProductListing() {
   const shirtTypes = [
     'Dress Shirt', 'Casual Shirt', 'Business Shirt', 'Polo Shirt', 'Henley Shirt',
     'Oxford Shirt', 'Flannel Shirt', 'Denim Shirt', 'Linen Shirt', 'T-Shirt'
+  ];
+
+  // Accessory style names for variety
+  const accessoryStyles = [
+    'Classic', 'Modern', 'Vintage', 'Luxury', 'Casual', 'Formal', 'Designer', 'Premium',
+    'Elegant', 'Stylish', 'Contemporary', 'Traditional', 'Trendy', 'Sophisticated',
+    'Minimalist', 'Bold', 'Refined', 'Chic', 'Timeless', 'Fashion-forward'
+  ];
+
+  const accessoryTypes = [
+    'Tie', 'Bow Tie', 'Pocket Square', 'Cufflinks', 'Watch', 'Belt', 'Suspenders',
+    'Lapel Pin', 'Tie Clip', 'Scarf', 'Gloves', 'Hat', 'Sunglasses', 'Wallet'
   ];
 
   const badges = ['Featured', 'Premium', 'Best Seller', 'New', 'Popular', 'Limited', 'Exclusive'];
@@ -171,10 +184,29 @@ export default function ProductListing() {
     };
   });
 
-  // Product data with all blazers, suits, jackets, waist coats, and shirts
-  const products = [...blazerProducts, ...suitsProducts, ...jacketsProducts, ...waistCoatsProducts, ...shirtsProducts];
+  // Generate all accessories products
+  const accessoriesProducts = accessoriesImages.map((imageUrl, index) => {
+    const styleIndex = index % accessoryStyles.length;
+    const typeIndex = index % accessoryTypes.length;
+    const badgeIndex = index % badges.length;
+    
+    return {
+      id: index + blazerImages.length + suitsImages.length + jacketsImages.length + waistCoatsImages.length + shirtsImages.length + 2, // Continue from shirts IDs
+      name: 'HV accessories',
+      category: 'Accessories',
+      image: imageUrl,
+      description: `Premium ${accessoryStyles[styleIndex].toLowerCase()} ${accessoryTypes[typeIndex].toLowerCase()} to complete your sophisticated look`,
+      features: ['Premium Quality', 'Elegant Design', 'Perfect Finishing'],
+      badge: badges[badgeIndex],
+      rating: 4.6 + ((index * 19) % 35) / 100, // Deterministic rating between 4.6-4.95
+      reviews: ((index * 29) % 120) + 25 // Deterministic reviews between 25-145
+    };
+  });
 
-  const categories = ['All', 'Blazer', 'Suits', 'Jackets', 'Waist Coats', 'Shirts'];
+  // Product data with all blazers, suits, jackets, waist coats, shirts, and accessories
+  const products = [...blazerProducts, ...suitsProducts, ...jacketsProducts, ...waistCoatsProducts, ...shirtsProducts, ...accessoriesProducts];
+
+  const categories = ['All', 'Blazer', 'Suits', 'Jackets', 'Waist Coats', 'Shirts', 'Accessories'];
   const [searchTerm, setSearchTerm] = useState('');
   const [displayCount, setDisplayCount] = useState(12); // Initial load count
 

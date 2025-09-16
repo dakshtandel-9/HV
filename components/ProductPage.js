@@ -7,6 +7,7 @@ import { suitsImages } from '../app/data/suitsImages';
 import { jacketsImages } from '../app/data/jacketsImages';
 import { waistCoatsImages } from '../app/data/waistCoatsImages';
 import { shirtsImages } from '../app/data/shirtsImages';
+import { accessoriesImages } from '../app/data/accessoriesImages';
 
 export default function ProductPage({ productId }) {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -71,6 +72,18 @@ export default function ProductPage({ productId }) {
   const shirtTypes = [
     'Dress Shirt', 'Casual Shirt', 'Business Shirt', 'Polo Shirt', 'Henley Shirt',
     'Oxford Shirt', 'Flannel Shirt', 'Denim Shirt', 'Linen Shirt', 'T-Shirt'
+  ];
+
+  // Accessory style names for variety
+  const accessoryStyles = [
+    'Classic', 'Modern', 'Vintage', 'Luxury', 'Casual', 'Formal', 'Designer', 'Premium',
+    'Elegant', 'Stylish', 'Contemporary', 'Traditional', 'Trendy', 'Sophisticated',
+    'Minimalist', 'Bold', 'Refined', 'Chic', 'Timeless', 'Fashion-forward'
+  ];
+
+  const accessoryTypes = [
+    'Tie', 'Bow Tie', 'Pocket Square', 'Cufflinks', 'Watch', 'Belt', 'Suspenders',
+    'Lapel Pin', 'Tie Clip', 'Scarf', 'Gloves', 'Hat', 'Sunglasses', 'Wallet'
   ];
 
   const badges = ['Featured', 'New Arrival', 'Best Seller', 'Premium', 'Limited Edition', 'Professional', 'Casual', 'Formal'];
@@ -290,8 +303,53 @@ export default function ProductPage({ productId }) {
     };
   });
 
-  // Create products object with all blazers, suits, jackets, waist coats, and shirts
-  const allProducts = [...blazerProducts, ...suitsProducts, ...jacketsProducts, ...waistCoatsProducts, ...shirtsProducts];
+  // Generate accessories products dynamically
+  const accessoriesProducts = accessoriesImages.map((imageUrl, index) => {
+    const productId = index + blazerImages.length + suitsImages.length + jacketsImages.length + waistCoatsImages.length + shirtsImages.length + 2; // Continue from shirts IDs
+    const styleIndex = index % accessoryStyles.length;
+    const typeIndex = index % accessoryTypes.length;
+    const badgeIndex = index % badges.length;
+    
+    return {
+      id: productId,
+      name: 'HV accessories',
+      category: 'Accessories',
+      images: [
+        imageUrl,
+        imageUrl
+      ],
+      description: `Elevate your style with our ${accessoryStyles[styleIndex]} ${accessoryTypes[typeIndex]}. Perfect for adding the finishing touch to any outfit with premium quality and elegant design.`,
+      features: [
+        'Premium Quality',
+        'Elegant Design',
+        'Perfect Finishing',
+        'Versatile Style',
+        'Durable Construction'
+      ],
+      specifications: {
+        'Material': index % 3 === 0 ? 'Premium Silk' : index % 3 === 1 ? 'Fine Cotton' : 'Luxury Leather',
+        'Style': accessoryStyles[styleIndex],
+        'Type': accessoryTypes[typeIndex],
+        'Care': index % 2 === 0 ? 'Dry Clean Only' : 'Hand Wash',
+        'Origin': 'Made in India',
+        'Finish': index % 2 === 0 ? 'Handcrafted' : 'Machine Finished'
+      },
+      sizes: accessoryTypes[typeIndex] === 'Belt' ? ['S', 'M', 'L', 'XL'] : 
+             accessoryTypes[typeIndex] === 'Gloves' ? ['S', 'M', 'L', 'XL'] :
+             ['One Size'],
+      colors: index % 4 === 0 ? ['Black', 'Navy', 'Brown', 'Grey'] : 
+              index % 4 === 1 ? ['Red', 'Blue', 'Green', 'Black'] :
+              index % 4 === 2 ? ['Silver', 'Gold', 'Black', 'White'] :
+              ['Brown', 'Black', 'Tan', 'Navy'],
+      badge: badges[badgeIndex],
+      inStock: true,
+      rating: 4.6 + ((index * 19) % 35) / 100, // Deterministic rating between 4.6-4.95
+      reviews: ((index * 29) % 120) + 25 // Deterministic reviews between 25-145
+    };
+  });
+
+  // Create products object with all blazers, suits, jackets, waist coats, shirts, and accessories
+  const allProducts = [...blazerProducts, ...suitsProducts, ...jacketsProducts, ...waistCoatsProducts, ...shirtsProducts, ...accessoriesProducts];
   const products = Object.fromEntries(allProducts.map(product => [product.id, product]));
 
   const product = products[productId] || products[2];
